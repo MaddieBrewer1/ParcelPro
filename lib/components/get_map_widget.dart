@@ -9,16 +9,6 @@ class MyMapWidget extends StatelessWidget {
         target: LatLng(29.654388, -82.337451), // Initial map center
         zoom: 12.0, // Initial zoom level
       ),
-      /*markers: {
-          Marker(
-            markerId: MarkerId('marker_id'),
-            position: LatLng(29.654388, -82.337451), // Marker position
-            infoWindow: InfoWindow(
-              title: 'Marker Title',
-              snippet: 'Marker Snippet',
-            ),
-          ),
-        },*/
     );
   }
 }
