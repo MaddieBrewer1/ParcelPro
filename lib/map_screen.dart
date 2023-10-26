@@ -9,14 +9,6 @@ class MapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return Scaffold(
-    // appBar: AppBar(
-    //   title: Text('Parcel Pro'),
-    //   centerTitle: true,
-    //   backgroundColor: Color.fromARGB(255, 0, 153, 255),
-    // ),
-    //body: left_menu_widget(),
-    //);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -26,7 +18,7 @@ class MapScreen extends StatelessWidget {
             child: MyMapWidget(),
           ),
           left_menu_widget(),
-          right_menu_widget(),
+          //right_menu_widget(),
         ],
       ),
     );

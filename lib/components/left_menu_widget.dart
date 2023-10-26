@@ -74,7 +74,7 @@ class left_menu_widget_state extends State<left_menu_widget> {
             offset: Offset.zero,
           ),
         ],
-        body: Opacity(opacity: 0.0),
+        body: _body(context),
       ),
     );
   }
@@ -82,7 +82,7 @@ class left_menu_widget_state extends State<left_menu_widget> {
   Widget _body(BuildContext context) {
     switch (rightMenuState) {
       case 0: //no right menu bar
-        return MyMapWidget();
+        return Opacity(opacity: 0.0);
       case 1: //Edit Parcel
         return right_menu_widget();
       case 2: //Insert Parcel
@@ -92,7 +92,7 @@ class left_menu_widget_state extends State<left_menu_widget> {
       case 4: //Settings
         return right_menu_widget();
       default: //no right menu bar
-        return MyMapWidget();
+        return Opacity(opacity: 0.0);
     }
   }
 }

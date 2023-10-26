@@ -14,7 +14,7 @@ class right_menu_widget extends StatelessWidget {
     //   child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
     //       Expanded(
     //         flex: 5,
-    //         child: MyMapWidget(),
+    //         child: Opacity(opacity: 0.0),
     //       ),
     //       Expanded(
     //         child: Column(
@@ -25,19 +25,18 @@ class right_menu_widget extends StatelessWidget {
     //     ]),
     //   );
     return SafeArea(
-      child: Align(
-        alignment: Alignment.topRight,
-        child: Container(
-          // child: Text("THis is text"),
-          width: MediaQuery.of(context).size.width * 0.15 ,
-          color: Colors.grey,
-          child: Column(
-             children: [
-                Text("This is the right sidebar"),
-              ],
-          ),
+        child: Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        // child: Text("THis is text"),
+        width: MediaQuery.of(context).size.width * 0.15,
+        color: Colors.grey,
+        child: Column(
+          children: [
+            Text("This is the right sidebar"),
+          ],
+        ),
       ),
-      ) 
-    );
+    ));
   }
 }
