@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:parcel_pro/components/map_widget.dart';
+import 'package:parcel_pro/components/right_menu_widget.dart';
 
 class left_menu_widget extends StatefulWidget {
   @override
@@ -71,7 +72,7 @@ class left_menu_widget_state extends State<left_menu_widget> {
             offset: Offset.zero,
           ),
         ],
-        body: MyMapWidget(),
+        body: right_menu_widget(),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parcel_pro/components/map_widget.dart';
+// import 'package:parcel_pro/components/map_widget.dart';
 import 'package:parcel_pro/components/left_menu_widget.dart';
 
 class MapScreen extends StatelessWidget {
