@@ -25,14 +25,19 @@ class right_menu_widget extends StatelessWidget {
     //     ]),
     //   );
     return SafeArea(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Column(
-            children: [Container()],
-          )
-        ],
+      child: Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          // child: Text("THis is text"),
+          width: 100,
+          color: Colors.grey,
+          child: Column(
+             children: [
+                Text("This is the right sidebar"),
+              ],
+          ),
       ),
+      ) 
     );
   }
 }
