@@ -17,16 +17,18 @@ class MapScreen extends StatelessWidget {
     // ),
     //body: left_menu_widget(),
     //);
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: MyMapWidget(),
-        ),
-        left_menu_widget(),
-        right_menu_widget(),
-      ],
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: MyMapWidget(),
+          ),
+          left_menu_widget(),
+          right_menu_widget(),
+        ],
+      ),
     );
   }
 }
