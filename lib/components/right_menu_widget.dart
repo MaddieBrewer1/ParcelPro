@@ -29,7 +29,7 @@ class right_menu_widget extends StatelessWidget {
         alignment: Alignment.topRight,
         child: Container(
           // child: Text("THis is text"),
-          width: 100,
+          width: MediaQuery.of(context).size.width * 0.15 ,
           color: Colors.grey,
           child: Column(
              children: [
