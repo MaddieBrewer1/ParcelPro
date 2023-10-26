@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parcel_pro/components/right_menu_widget.dart';
 import 'package:parcel_pro/map_screen.dart';
 
 void main() {
@@ -15,6 +16,13 @@ class MyApp extends StatelessWidget {
       title: 'Parcel Pro',
       home: MapScreen(),
       debugShowCheckedModeBanner: false,
+      // routes: {
+      //   '/' : (context) => MapScreen(),
+      //   'Edit' : (context) => right_menu_widget(),
+      //   'Insert' :(context) => right_menu_widget(),
+      //   'delete' :(context) => right_menu_widget(),
+      //   'settings' :(context) => right_menu_widget(),
+      // },
     );
   }
 }

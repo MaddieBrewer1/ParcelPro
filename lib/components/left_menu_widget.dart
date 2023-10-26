@@ -74,7 +74,7 @@ class left_menu_widget_state extends State<left_menu_widget> {
             offset: Offset.zero,
           ),
         ],
-        body: _body(context),
+        body: Opacity(opacity: 0.0),
       ),
     );
   }

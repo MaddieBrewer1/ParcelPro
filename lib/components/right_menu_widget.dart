@@ -10,19 +10,29 @@ import 'package:parcel_pro/components/map_widget.dart';
 class right_menu_widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // return SafeArea(
+    //   child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+    //       Expanded(
+    //         flex: 5,
+    //         child: MyMapWidget(),
+    //       ),
+    //       Expanded(
+    //         child: Column(
+    //           children: [
+    //             Text("This is the right sidebar")
+    //           ],
+    //       ))
+    //     ]),
+    //   );
     return SafeArea(
-      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Expanded(
-            flex: 5,
-            child: MyMapWidget(),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Text("This is the right sidebar")
-              ],
-          ))
-        ]),
-      );
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Column(
+            children: [Container()],
+          )
+        ],
+      ),
+    );
   }
 }
