@@ -10,28 +10,29 @@ class left_menu_widget extends StatefulWidget {
 
 class left_menu_widget_state extends State<left_menu_widget> {
   late List<CollapsibleItem> _items;
+  late int rightMenuState;
 
   List<CollapsibleItem> get _generateItems {
     return [
       CollapsibleItem(
         text: 'Edit Parcel',
         icon: Icons.edit_outlined,
-        onPressed: () {},
+        onPressed: () => setState(() => rightMenuState = 1),
       ),
       CollapsibleItem(
         text: 'Insert Parcel',
         icon: Icons.arrow_downward_outlined,
-        onPressed: () {},
+        onPressed: () => setState(() => rightMenuState = 2),
       ),
       CollapsibleItem(
         text: "Delete Parcel",
         icon: Icons.cancel_outlined,
-        onPressed: () {},
+        onPressed: () => setState(() => rightMenuState = 3),
       ),
       CollapsibleItem(
         text: "Settings",
         icon: Icons.settings,
-        onPressed: () {},
+        onPressed: () => setState(() => rightMenuState = 4),
       )
     ];
   }
@@ -40,6 +41,7 @@ class left_menu_widget_state extends State<left_menu_widget> {
   void initState() {
     super.initState();
     _items = _generateItems;
+    rightMenuState = 0;
   }
 
   @override
@@ -72,8 +74,25 @@ class left_menu_widget_state extends State<left_menu_widget> {
             offset: Offset.zero,
           ),
         ],
-        body: right_menu_widget(),
+        body: _body(context),
       ),
     );
+  }
+
+  Widget _body(BuildContext context) {
+    switch (rightMenuState) {
+      case 0: //no right menu bar
+        return MyMapWidget();
+      case 1: //Edit Parcel
+        return right_menu_widget();
+      case 2: //Insert Parcel
+        return right_menu_widget();
+      case 3: //Delete Parcel
+        return right_menu_widget();
+      case 4: //Settings
+        return right_menu_widget();
+      default: //no right menu bar
+        return MyMapWidget();
+    }
   }
 }
