@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Parcel Pro',
       home: MapScreen(),
       debugShowCheckedModeBanner: false,
+      // theme: ThemeData(
+
+      // ),
     );
   }
 }
