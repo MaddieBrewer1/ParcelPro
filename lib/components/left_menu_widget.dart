@@ -82,19 +82,22 @@ class left_menu_widget_state extends State<left_menu_widget> {
   Widget _body(
     BuildContext context,
   ) {
-    switch (rightMenuState) {
-      case 0: //no right menu bar
+    switch (rightMenuState){
+      case 0:
         return const Opacity(opacity: 0.0);
-      case 1: //Edit Parcel
-        return right_menu_widget();
-      case 2: //Insert Parcel
-        return right_menu_widget();
-      case 3: //Delete Parcel
-        return right_menu_widget();
-      case 4: //Settings
-        return right_menu_widget();
-      default: //no right menu bar
+      case 1:
+        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+      case 2:
+        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+      case 3:
+        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+      case 4:
+        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+      default:
         return const Opacity(opacity: 0.0);
+
+    
     }
   }
 }
+
