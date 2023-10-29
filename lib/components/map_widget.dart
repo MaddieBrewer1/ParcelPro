@@ -20,7 +20,7 @@ class _MapWidgetState extends State<MyMapWidget> {
   @override
   Widget build(BuildContext context) {
     map = GoogleMap(
-        initialCameraPosition: CameraPosition(
+        initialCameraPosition: const CameraPosition(
           target: LatLng(29.654388, -82.337451), // Initial map center
           zoom: 12.0, // Initial zoom level
         ),
@@ -32,44 +32,60 @@ class _MapWidgetState extends State<MyMapWidget> {
     return map;
   }
 
+  var running = false;
   void mapUpdate() async {
-    var bounds = await _control!.getVisibleRegion();
-    final queryParams = {
-      "lat1": bounds.southwest.latitude.toString(),
-      "long1": bounds.southwest.longitude.toString(),
-      "lat2": bounds.northeast.latitude.toString(),
-      "long2": bounds.northeast.longitude.toString()
-    };
-    final uri = Uri.http("3.94.113.50", '', queryParams);
-    final response = await http.get(uri);
+    if (!running) {
+      running = true;
+      var bounds = await _control!.getVisibleRegion();
+      final queryParams = {
+        "lat1": bounds.southwest.latitude.toString(),
+        "long1": bounds.southwest.longitude.toString(),
+        "lat2": bounds.northeast.latitude.toString(),
+        "long2": bounds.northeast.longitude.toString()
+      };
+      final uri = Uri.http("3.94.113.50", '', queryParams);
+      final response = await http.get(uri);
 
-    Map<String, dynamic> data = json.decode(response.body);
-    List<Polygon> polygons;
+      Map<String, dynamic> data = json.decode(response.body);
 
-    _polygon.clear();
-    for (dynamic i in data['parcels']){
-      List<LatLng> latlngs = [];
-      var objID = i['objectid'];
-      var polyText = i['st_astext'].toString();
-      polyText = polyText.replaceAll(RegExp("([a-zA-Z()])*"), "");
+      _polygon.clear();
+      for (dynamic i in data['parcels']){
+        List<LatLng> latlngs = [];
+        var objID = i['objectid'];
+        var polyText = i['st_astext'].toString();
+        polyText = polyText.replaceAll(RegExp("([a-zA-Z()])*"), "");
 
-      for (String j in polyText.split(",")){
-        List<String> k = j.split(" ");
-        latlngs.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+          for (String j in polyText.split(",")) {
+            List<String> k = j.split(" ");
+            latlngs.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+          }
+
+          map.polygons.add(Polygon(polygonId: PolygonId(id.toString())
+            ,
+            points: latlngs
+            ,
+            fillColor: Colors.green.withOpacity(0.3)
+            ,
+            strokeColor: Colors.green
+            ,
+            geodesic: true
+            ,
+            strokeWidth: 4,));
+          id++;
+        
+
+        map.polygons.add(Polygon(polygonId: PolygonId(objID.toString())
+          , points: latlngs
+          , fillColor: Colors.green.withOpacity(0.3)
+          , strokeColor: Colors.green
+          , geodesic: true
+          , strokeWidth: 4
+          , onTap: () => _onParcelTap(objID)));
+        id++;
       }
-
-      map.polygons.add(Polygon(polygonId: PolygonId(objID.toString())
-        , points: latlngs
-        , fillColor: Colors.green.withOpacity(0.3)
-        , strokeColor: Colors.green
-        , geodesic: true
-        , strokeWidth: 4
-        , onTap: () => _onParcelTap(objID)));
-      id++;
+      setState(() {});
+      running = false;
     }
-    
-    setState(() {
-    });
   }
 
   void onMap(GoogleMapController controller){

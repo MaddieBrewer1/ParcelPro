@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 //import 'package:parcel_pro/components/map_widget.dart';
 import 'package:parcel_pro/components/right_menu_widget.dart';
+import 'package:parcel_pro/components/right_menu_edit_widget.dart';
+import 'package:parcel_pro/components/right_menu_insert_widget.dart';
+import 'package:parcel_pro/components/right_menu_delete_widget.dart';
+import 'package:parcel_pro/components/right_menu_settings_widget.dart';
 
 class left_menu_widget extends StatefulWidget {
   @override
@@ -86,13 +90,13 @@ class left_menu_widget_state extends State<left_menu_widget> {
       case 0:
         return const Opacity(opacity: 0.0);
       case 1:
-        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+        return right_menu_edit_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
       case 2:
-        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+        return right_menu_insert_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
       case 3:
-        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+        return right_menu_delete_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
       case 4:
-        return right_menu_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
+        return right_menu_settings_widget(callback:() => setState(() => rightMenuState = 0),rightMenuState: rightMenuState);
       default:
         return const Opacity(opacity: 0.0);
 
