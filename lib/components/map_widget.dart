@@ -61,34 +61,35 @@ class _MapWidgetState extends State<MyMapWidget> {
 
       Map<String, dynamic> data = json.decode(response.body);
 
+      final ringRegex = RegExp("([0-9 ,-\.][0-9][0-9 ,-\.]+)");
       _polygon.clear();
+
       for (dynamic i in data['parcels']){
-        List<LatLng> latlngs = [];
+        List<LatLng> outerRing = [];
+        List<List<LatLng>> innerRings = [];
         var objID = i['objectid'];
         var polyText = i['st_astext'].toString();
-        polyText = polyText.replaceAll(RegExp("([a-zA-Z()])*"), "");
+        var rings = ringRegex.allMatches(polyText);
 
-          for (String j in polyText.split(",")) {
-            List<String> k = j.split(" ");
-            latlngs.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+        for (var i = 0; i < rings.length; i++){
+          if (i == 0){
+            for (String j in rings.elementAt(0).group(0)!.split(",")) {
+              List<String> k = j.split(" ");
+              outerRing.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+            }
+          } else {
+            List<LatLng> inner = [];
+            for (String j in rings.elementAt(i).group(0)!.split(",")) {
+              List<String> k = j.split(" ");
+              inner.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+            }
+            innerRings.add(inner);
           }
-
-          map.polygons.add(Polygon(polygonId: PolygonId(id.toString())
-            ,
-            points: latlngs
-            ,
-            fillColor: Colors.green.withOpacity(0.3)
-            ,
-            strokeColor: Colors.green
-            ,
-            geodesic: true
-            ,
-            strokeWidth: 4,));
-          id++;
-        
+        }
 
         map.polygons.add(Polygon(polygonId: PolygonId(objID.toString())
-          , points: latlngs
+          , points: outerRing
+          , holes: innerRings
           , fillColor: Colors.green.withOpacity(0.3)
           , strokeColor: Colors.green
           , geodesic: true
