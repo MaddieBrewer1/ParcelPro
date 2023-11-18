@@ -6,6 +6,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:parcel_pro/components/right_menu_edit_widget.dart';
+import 'package:parcel_pro/components/right_menu_parcel_info.dart';
+
 class MyMapWidget extends StatefulWidget {
   @override
   _MapWidgetState createState() => _MapWidgetState();
@@ -16,7 +19,9 @@ class _MapWidgetState extends State<MyMapWidget> {
   late GoogleMap map;
   Set<Polygon> _polygon = HashSet<Polygon>();
   var id = 0;
-  
+
+  var displayRight = false;
+  String rightText = "";
   @override
   Widget build(BuildContext context) {
     map = GoogleMap(
@@ -29,7 +34,15 @@ class _MapWidgetState extends State<MyMapWidget> {
         polygons: _polygon
     );
 
-    return map;
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          map,
+          if (displayRight)
+            right_menu_parcel_info(rightMenuText: rightText, callback: () => setState(() {displayRight = false;}))
+        ],
+      ),
+    );
   }
 
   var running = false;
@@ -99,6 +112,16 @@ class _MapWidgetState extends State<MyMapWidget> {
     final response = await http.get(parceluri);
 
     var data = json.decode(response.body);
-    print("returned info: $data");
+
+    var text = "";
+
+    for (var entry in data.entries){
+      text += "${entry.key}: ${entry.value}\n";
+    }
+
+    setState(() {
+      displayRight = true;
+      rightText = text;
+    });
   }
 }
