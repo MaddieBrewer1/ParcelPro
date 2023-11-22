@@ -17,7 +17,7 @@ class MapScreen extends StatelessWidget {
             width: double.infinity,
             child: MyMapWidget(),
           ),
-          left_menu_widget(),
+          //left_menu_widget(),
           //right_menu_widget(),
         ],
       ),

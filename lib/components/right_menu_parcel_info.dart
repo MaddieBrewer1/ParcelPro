@@ -7,72 +7,71 @@ class right_menu_parcel_info extends StatelessWidget {
   final String rightMenuText;
   final VoidCallback callback;
   final int polygonId;
-  const right_menu_parcel_info({
-    Key? key,
-    required this.rightMenuText,
-    required this.callback,
-    required this.polygonId
-  }) : super(key: key);
+  const right_menu_parcel_info(
+      {Key? key,
+      required this.rightMenuText,
+      required this.callback,
+      required this.polygonId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.15 ,
-            color: Color.fromARGB(255, 88, 88, 88),
-            child: Column(
-              children: [
-                Container(
-                    alignment: Alignment.topLeft,
-                    child:
-                    CloseButton(
-                      color: Color.fromARGB(255, 236, 236, 236),
-                      onPressed:() =>callback(),
-                    )
-                ),
-
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    children: [
-                      WidgetSpan(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                          child: Icon(Icons.edit_outlined, color: Colors.white,),
-                        ),
+      alignment: Alignment.topRight,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.15,
+        color: Color.fromARGB(255, 88, 88, 88),
+        child: Column(
+          children: [
+            Container(
+                alignment: Alignment.topLeft,
+                child: CloseButton(
+                  color: Color.fromARGB(255, 236, 236, 236),
+                  onPressed: () => callback(),
+                )),
+            RichText(
+              text: TextSpan(
+                style: TextStyle(color: Colors.white, fontSize: 20.0),
+                children: [
+                  WidgetSpan(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      child: Icon(
+                        Icons.edit_outlined,
+                        color: Colors.white,
                       ),
-                      TextSpan(text: 'Parcel Information'),
-                    ],
+                    ),
                   ),
-                ),
-
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    children: [
-                      TextSpan(text: rightMenuText),
-                    ],
-                  ),
-                ),
-
-                ElevatedButton(
-                  onPressed: () async {
-                    final deleteURI = Uri.http('3.94.113.50','/deleteParcel', {"objectid": polygonId.toString(), "key": "3127639894533413"});
-                    final response = await http.get(deleteURI);
-                    callback();
-                  },
-                  child: Text('Delete this Parcel'),
-                ),
-              ],
+                  TextSpan(text: 'Parcel Information'),
+                ],
+              ),
             ),
-          ),
-        )
-    );
+            RichText(
+              text: TextSpan(
+                style: TextStyle(color: Colors.white, fontSize: 20.0),
+                children: [
+                  TextSpan(text: rightMenuText),
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final deleteURI = Uri.http('3.94.113.50', '/deleteParcel', {
+                  "objectid": polygonId.toString(),
+                  "key": "3127639894533413"
+                });
+                final response = await http.get(deleteURI);
+                callback();
+              },
+              child: Text('Delete this Parcel'),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
-
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   primary: Colors.white,
