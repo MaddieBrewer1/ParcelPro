@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 //import 'package:parcel_pro/components/map_widget.dart';
@@ -12,6 +14,127 @@ class left_menu_widget extends StatefulWidget {
   left_menu_widget_state createState() => left_menu_widget_state();
 }
 
+class left_menu_widget_state extends State<left_menu_widget> {
+  double _width = 0.05;
+  double fontsize = 0;
+  bool open = false;
+  Icon arrowIcon = Icon(Icons.arrow_forward_ios);
+  String editLabel = 'Edit\nParcel';
+  String insertLabel = 'Insert\nParcel';
+  String deleteLabel = 'Delete\nParcel';
+  String settingsLabel = 'Settings';
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Align(
+      alignment: Alignment.topLeft,
+      child: AnimatedContainer(
+        width: MediaQuery.of(context).size.width * _width,
+        color: Colors.blueGrey,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.fastOutSlowIn,
+        child: Column(
+          children: [
+            IconButton(
+              iconSize: 25,
+              icon: arrowIcon,
+              color: Colors.white,
+              onPressed: () => setState(() {
+                open = !open;
+                if (open) {
+                  fontsize = 15;
+                  _width = 0.15;
+                  arrowIcon = Icon(Icons.arrow_back_ios);
+                  //editLabel = ' Edit Parcel';
+                  // insertLabel = ' Insert Parcel';
+                  // deleteLabel = ' Delete Parcel';
+                  // settingsLabel = 'Settings';
+                } else {
+                  fontsize = 0;
+                  _width = 0.05;
+                  arrowIcon = Icon(Icons.arrow_forward_ios);
+                  //editLabel = '';
+                  // insertLabel = '';
+                  // deleteLabel = '';
+                  // settingsLabel = '';
+                }
+              }),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //edit
+              onPressed: () => setState(() => {}),
+              icon: const Icon(
+                Icons.edit_outlined,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(
+                editLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
+              ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //insert
+              onPressed: () => setState(() => {}),
+              icon: const Icon(
+                Icons.arrow_downward_outlined,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(
+                insertLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
+              ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //delete
+              onPressed: () => setState(() => {}),
+              icon: const Icon(
+                Icons.cancel_outlined,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(
+                deleteLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
+              ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //settings
+              onPressed: () => setState(() => {}),
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 40,
+              ),
+              label: Text(
+                settingsLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
+              ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+}
+/*
 class left_menu_widget_state extends State<left_menu_widget> {
   late List<CollapsibleItem> _items;
   late int rightMenuState;
@@ -103,5 +226,5 @@ class left_menu_widget_state extends State<left_menu_widget> {
     
     }
   }
-}
+}*/
 
