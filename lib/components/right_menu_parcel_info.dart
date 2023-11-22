@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:parcel_pro/components/map_widget.dart';
+import 'package:http/http.dart' as http;
 
 class right_menu_parcel_info extends StatelessWidget {
   final String rightMenuText;
   final VoidCallback callback;
+  final int polygonId;
   const right_menu_parcel_info({
     Key? key,
     required this.rightMenuText,
     required this.callback,
+    required this.polygonId
   }) : super(key: key);
 
   @override
@@ -52,6 +55,15 @@ class right_menu_parcel_info extends StatelessWidget {
                       TextSpan(text: rightMenuText),
                     ],
                   ),
+                ),
+
+                ElevatedButton(
+                  onPressed: () async {
+                    final deleteURI = Uri.http('3.94.113.50','/deleteParcel', {"objectid": polygonId.toString(), "key": "3127639894533413"});
+                    final response = await http.get(deleteURI);
+                    callback();
+                  },
+                  child: Text('Delete this Parcel'),
                 ),
               ],
             ),

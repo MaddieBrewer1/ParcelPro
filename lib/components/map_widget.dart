@@ -22,6 +22,8 @@ class _MapWidgetState extends State<MyMapWidget> {
 
   var displayRight = false;
   String rightText = "";
+  var polygonId = -1;
+
   @override
   Widget build(BuildContext context) {
     map = GoogleMap(
@@ -39,7 +41,7 @@ class _MapWidgetState extends State<MyMapWidget> {
         children: <Widget>[
           map,
           if (displayRight)
-            right_menu_parcel_info(rightMenuText: rightText, callback: () => setState(() {displayRight = false;}))
+            right_menu_parcel_info(rightMenuText: rightText, callback: () => setState(() {displayRight = false; this.mapUpdate();}), polygonId: polygonId)
         ],
       ),
     );
@@ -123,6 +125,7 @@ class _MapWidgetState extends State<MyMapWidget> {
     setState(() {
       displayRight = true;
       rightText = text;
+      this.polygonId = polygonId;
     });
   }
 }
