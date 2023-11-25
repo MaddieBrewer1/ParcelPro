@@ -32,102 +32,100 @@ class left_menu_widget_state extends State<left_menu_widget> {
     return SafeArea(
         child: Align(
       alignment: Alignment.topLeft,
-      child: GestureDetector(
-        child: AnimatedContainer(
-          width: MediaQuery.of(context).size.width * _width,
-          color: Colors.blueGrey,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.fastOutSlowIn,
-          child: Column(
-            children: [
-              IconButton(
-                iconSize: 25,
-                icon: arrowIcon,
-                color: Colors.white,
-                onPressed: () => setState(() {
-                  open = !open;
-                  if (open) {
-                    fontsize = 15;
-                    _width = 0.15;
-                    arrowIcon = Icon(Icons.arrow_back_ios);
-                  } else {
-                    fontsize = 0;
-                    _width = 0.05;
-                    arrowIcon = Icon(Icons.arrow_forward_ios);
-                  }
-                }),
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              TextButton.icon(
-                //edit
-                // onPressed: () => setState(() => {}),
-                onPressed: () => setState(() => widget.menuOption(1)),
+      child: AnimatedContainer(
+        width: MediaQuery.of(context).size.width * _width,
+        color: Colors.blueGrey,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.fastOutSlowIn,
+        child: Column(
+          children: [
+            IconButton(
+              iconSize: 25,
+              icon: arrowIcon,
+              color: Colors.white,
+              onPressed: () => setState(() {
+                open = !open;
+                if (open) {
+                  fontsize = 15;
+                  _width = 0.15;
+                  arrowIcon = Icon(Icons.arrow_back_ios);
+                } else {
+                  fontsize = 0;
+                  _width = 0.05;
+                  arrowIcon = Icon(Icons.arrow_forward_ios);
+                }
+              }),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //edit
+              // onPressed: () => setState(() => {}),
+              onPressed: () => setState(() => widget.menuOption(1)),
 
-                icon: const Icon(
-                  Icons.edit_outlined,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                label: Text(
-                  editLabel,
-                  style: TextStyle(color: Colors.white, fontSize: fontsize),
-                ),
+              icon: const Icon(
+                Icons.edit_outlined,
+                color: Colors.white,
+                size: 40,
               ),
-              const Spacer(
-                flex: 1,
+              label: Text(
+                editLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
               ),
-              TextButton.icon(
-                //insert
-                onPressed: () => setState(() => widget.menuOption(2)),
-                icon: const Icon(
-                  Icons.arrow_downward_outlined,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                label: Text(
-                  insertLabel,
-                  style: TextStyle(color: Colors.white, fontSize: fontsize),
-                ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //insert
+              onPressed: () => setState(() => widget.menuOption(2)),
+              icon: const Icon(
+                Icons.arrow_downward_outlined,
+                color: Colors.white,
+                size: 40,
               ),
-              const Spacer(
-                flex: 1,
+              label: Text(
+                insertLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
               ),
-              TextButton.icon(
-                //delete
-                onPressed: () => setState(() => widget.menuOption(3)),
-                icon: const Icon(
-                  Icons.cancel_outlined,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                label: Text(
-                  deleteLabel,
-                  style: TextStyle(color: Colors.white, fontSize: fontsize),
-                ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //delete
+              onPressed: () => setState(() => widget.menuOption(3)),
+              icon: const Icon(
+                Icons.cancel_outlined,
+                color: Colors.white,
+                size: 40,
               ),
-              const Spacer(
-                flex: 1,
+              label: Text(
+                deleteLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
               ),
-              TextButton.icon(
-                //settings
-                onPressed: () => setState(() => widget.menuOption(4)),
-                icon: const Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                label: Text(
-                  settingsLabel,
-                  style: TextStyle(color: Colors.white, fontSize: fontsize),
-                ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            TextButton.icon(
+              //settings
+              onPressed: () => setState(() => widget.menuOption(4)),
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 40,
               ),
-              const Spacer(
-                flex: 1,
+              label: Text(
+                settingsLabel,
+                style: TextStyle(color: Colors.white, fontSize: fontsize),
               ),
-            ],
-          ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+          ],
         ),
       ),
     ));

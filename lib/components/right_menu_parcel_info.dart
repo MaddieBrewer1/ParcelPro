@@ -21,7 +21,7 @@ class right_menu_parcel_info extends StatelessWidget {
       alignment: Alignment.topRight,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.15,
-        color: Color.fromARGB(255, 88, 88, 88),
+        color: Colors.blueGrey,
         child: Column(
           children: [
             Container(

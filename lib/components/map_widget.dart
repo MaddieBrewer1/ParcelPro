@@ -25,6 +25,7 @@ class _MapWidgetState extends State<MyMapWidget> {
   var id = 0;
 
   var displayRight = false;
+  var selectDelete = false;
   String rightText = "";
   var polygonId = -1;
   var menuId = 0;
@@ -46,27 +47,41 @@ class _MapWidgetState extends State<MyMapWidget> {
         polygons: _polygon);
 
     return Scaffold(
-      body: Stack(
+      body: Row(
         children: <Widget>[
-          map,
           left_menu_widget(setMenuId),
+          Expanded(
+            child: map,
+          ),
           (() {
             switch (menuId) {
               case 0:
                 return const Opacity(opacity: 0.0);
               case 1:
+                displayRight = false;
                 return right_menu_edit_widget(
                     callback: () => setState(() => menuId = 0),
                     rightMenuState: menuId);
               case 2:
+                displayRight = false;
                 return right_menu_insert_widget(
-                    callback: () => setState(() => menuId = 0),
+                    callback: () => setState(() {
+                          menuId = 0;
+                        }),
                     rightMenuState: menuId);
               case 3:
+                displayRight = false;
                 return right_menu_delete_widget(
-                    callback: () => setState(() => menuId = 0),
-                    rightMenuState: menuId);
+                  callback: () => setState(() {
+                    menuId = 0;
+                    selectDelete = false;
+                  }),
+                  rightMenuState: menuId,
+                  parcelText: rightText,
+                  selectDelete: selectDelete,
+                );
               case 4:
+                displayRight = false;
                 return right_menu_settings_widget(
                     callback: () => setState(() => menuId = 0),
                     rightMenuState: menuId);
@@ -164,10 +179,27 @@ class _MapWidgetState extends State<MyMapWidget> {
       text += "${entry.key}: ${entry.value}\n";
     }
 
-    setState(() {
-      displayRight = true;
-      rightText = text;
-      this.polygonId = polygonId;
-    });
+    if (menuId == 1) {
+    } else if (menuId == 3) {
+      var ptext = "";
+      List vals = ["oaddr1", "ocity", "ostate", "ozipcd"];
+      for (var entry in data.entries) {
+        if (vals.contains(entry.key)) {
+          ptext += "${entry.key}: ${entry.value}\n";
+        }
+      }
+      setState(() {
+        rightText = ptext;
+        this.polygonId = polygonId;
+        selectDelete = true;
+      });
+    } else {
+      setState(() {
+        menuId = 0;
+        displayRight = true;
+        rightText = text;
+        this.polygonId = polygonId;
+      });
+    }
   }
 }
