@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:parcel_pro/components/map_widget.dart';
+import 'package:http/http.dart' as http;
 
 class right_menu_delete_widget extends StatefulWidget {
   final int rightMenuState;
   final VoidCallback callback;
   final parcelText;
   final selectDelete;
+  final int polygonId;
   const right_menu_delete_widget({
     Key? key,
     required this.rightMenuState,
     required this.callback,
     required this.parcelText,
     required this.selectDelete,
+    required this.polygonId,
   }) : super(key: key);
   @override
   right_menu_delete_state createState() => right_menu_delete_state();
@@ -36,12 +39,12 @@ class right_menu_delete_state extends State<right_menu_delete_widget> {
                   onPressed: () => widget.callback(),
                 )),
             RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
                 children: [
                   WidgetSpan(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      padding: EdgeInsets.symmetric(horizontal: 2.0),
                       child: Icon(
                         Icons.cancel_outlined,
                         color: Colors.white,
@@ -72,39 +75,47 @@ class right_menu_delete_state extends State<right_menu_delete_widget> {
         children: [
           Container(
               margin: EdgeInsets.fromLTRB(15, 100, 15, 10),
-              child: Text(
+              child: const Text(
                 "Are you sure you would like to delete this parcel?",
                 style: TextStyle(color: Colors.white, fontSize: 18.0),
               )),
           Container(
-              margin: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               color: Colors.blueGrey[700],
               child: Text(
                 widget.parcelText,
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
+                style: const TextStyle(color: Colors.white, fontSize: 18.0),
               )),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () => widget.callback(),
                   style: flatButtonStyle,
-                  child: Text(
+                  child: const Text(
                     "Cancel",
                   )),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               TextButton(
-                  onPressed: () {},
+                  //untested
+                  onPressed: () async {
+                    final deleteURI = Uri.http('3.94.113.50', '/deleteParcel', {
+                      "objectid": widget.polygonId.toString(),
+                      "key": "3127639894533413"
+                    });
+                    final response = await http.get(deleteURI);
+                    widget.callback();
+                  },
                   style: flatButtonStyle,
-                  child: Text(
+                  child: const Text(
                     "Delete",
                   )),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
             ],

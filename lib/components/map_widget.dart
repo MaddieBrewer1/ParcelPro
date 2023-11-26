@@ -79,6 +79,7 @@ class _MapWidgetState extends State<MyMapWidget> {
                   rightMenuState: menuId,
                   parcelText: rightText,
                   selectDelete: selectDelete,
+                  polygonId: polygonId, //I think this is right?
                 );
               case 4:
                 displayRight = false;

@@ -48,6 +48,7 @@ class right_menu_parcel_info extends StatelessWidget {
               ),
             ),
             RichText(
+              //should we wrap with single child scroll view to prevent overflow?
               text: TextSpan(
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
                 children: [
