@@ -56,18 +56,35 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
                 ],
               ),
             ),
-            Column(
-              children: [
-                insertCoordinates(context, inserts),
-                IconButton(
-                    onPressed: () => setState(() {
-                          inserts.add(insertTextField());
-                        }),
-                    icon: Icon(
-                      Icons.add_rounded,
-                      color: Colors.white,
-                    )),
-              ],
+            Expanded(
+              child: Column(
+                children: [
+                  insertCoordinates(context, inserts),
+                  IconButton(
+                      onPressed: () => setState(() {
+                            inserts.add(insertTextField());
+                          }),
+                      icon: Icon(
+                        Icons.add_rounded,
+                        color: Colors.white,
+                      )),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 15),
+              child: TextButton.icon(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                label: Text(
+                  "Done",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ),
             )
           ],
         ),
@@ -91,6 +108,7 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
 
   Widget insertTextField() {
     return const TextField(
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
           filled: true,
           fillColor: Color.fromARGB(255, 69, 90, 100),
