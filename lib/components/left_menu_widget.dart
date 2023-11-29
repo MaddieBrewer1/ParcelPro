@@ -7,7 +7,7 @@ import 'package:parcel_pro/components/right_menu_widget.dart';
 import 'package:parcel_pro/components/right_menu_edit_widget.dart';
 import 'package:parcel_pro/components/right_menu_insert_widget.dart';
 import 'package:parcel_pro/components/right_menu_delete_widget.dart';
-import 'package:parcel_pro/components/right_menu_settings_widget.dart';
+import 'package:parcel_pro/components/right_menu_info_widget.dart';
 
 class left_menu_widget extends StatefulWidget {
   final Function(int) menuOption;
@@ -110,10 +110,10 @@ class left_menu_widget_state extends State<left_menu_widget> {
               flex: 1,
             ),
             TextButton.icon(
-              //settings
+              //info
               onPressed: () => setState(() => widget.menuOption(4)),
               icon: const Icon(
-                Icons.settings,
+                Icons.info_outline,
                 color: Colors.white,
                 size: 40,
               ),

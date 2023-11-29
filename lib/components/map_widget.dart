@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:parcel_pro/components/right_menu_edit_widget.dart';
 import 'package:parcel_pro/components/right_menu_delete_widget.dart';
 import 'package:parcel_pro/components/right_menu_insert_widget.dart';
-import 'package:parcel_pro/components/right_menu_settings_widget.dart';
+import 'package:parcel_pro/components/right_menu_info_widget.dart';
 import 'package:parcel_pro/components/right_menu_parcel_info.dart';
 
 class MyMapWidget extends StatefulWidget {
@@ -84,7 +84,7 @@ class _MapWidgetState extends State<MyMapWidget> {
                 );
               case 4:
                 displayRight = false;
-                return right_menu_settings_widget(
+                return right_menu_info_widget(
                     callback: () => setState(() => menuId = 0),
                     rightMenuState: menuId);
               default:
