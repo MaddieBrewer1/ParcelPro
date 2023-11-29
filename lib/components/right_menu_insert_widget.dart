@@ -17,11 +17,11 @@ class right_menu_insert_widget extends StatefulWidget {
 
 class right_menu_insert_state extends State<right_menu_insert_widget> {
   late List<TextField> inserts;
-
+  int indexCount = 1;
   @override
   void initState() {
     super.initState();
-    inserts = [insertTextField()];
+    inserts = [insertTextField(0)];
   }
 
   @override
@@ -63,7 +63,7 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
                   insertCoordinates(context, inserts),
                   IconButton(
                       onPressed: () => setState(() {
-                            inserts.add(insertTextField());
+                            inserts.add(insertTextField(indexCount++));
                           }),
                       icon: Icon(
                         Icons.add_rounded,
@@ -130,16 +130,34 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
     );
   }
 
-  TextField insertTextField() {
+  TextField insertTextField(int index) {
     return TextField(
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
+        suffixIcon: IconButton( icon: Icon(Icons.close),
+        onPressed: () => setState(() {
+          inserts.removeAt(_findIndex(index));
+        }),
+        color: Colors.white,
+        ),
           filled: true,
           fillColor: Color.fromARGB(255, 69, 90, 100),
           hintStyle: TextStyle(color: Colors.white),
           hintText: "Enter Coordinate"),
       controller: TextEditingController(),
     );
+  }
+
+  List<int> removedIds = [];
+
+  int _findIndex(int index){
+     removedIds.add(index);
+    int i = 0;
+    for (var ids in removedIds){
+      if(ids < index)
+        i++;
+    }
+    return index - i;
   }
 }
 
