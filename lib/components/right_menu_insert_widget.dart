@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:parcel_pro/components/map_widget.dart';
+import 'package:http/http.dart' as http;
 
 class right_menu_insert_widget extends StatefulWidget {
   final int rightMenuState;
@@ -15,7 +16,7 @@ class right_menu_insert_widget extends StatefulWidget {
 }
 
 class right_menu_insert_state extends State<right_menu_insert_widget> {
-  late List<Widget> inserts;
+  late List<TextField> inserts;
 
   @override
   void initState() {
@@ -74,7 +75,30 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
             Container(
               margin: EdgeInsets.only(bottom: 15),
               child: TextButton.icon(
-                onPressed: () {},
+                onPressed: () async { //convert list to latitudes
+                  var polyText = "MULTIPOLYGON(((";
+                  for (TextField widget in inserts){
+                    try {
+                      String latlng = widget.controller!.text;
+                      var latlngarray = latlng.split(",");
+                      polyText += latlngarray[1] + " " + latlngarray[0] + ",";
+                    } catch  (e) {}
+                  }
+
+                  try {
+                    var start = inserts[0].controller!.text;
+                    var latlngarray = start.split(",");
+                    polyText += latlngarray[1] + " " + latlngarray[0] + ")))";
+                  } catch (e) {}
+
+                  final deleteURI = Uri.http('3.94.113.50', '/insertParcel', {
+                    "polygon": polyText,
+                    "key": "3127639894533413"
+                  });
+
+                  final response = await http.get(deleteURI);
+                  widget.callback();
+                },
                 icon: Icon(
                   Icons.check_circle_outline,
                   color: Colors.white,
@@ -106,14 +130,15 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
     );
   }
 
-  Widget insertTextField() {
-    return const TextField(
+  TextField insertTextField() {
+    return TextField(
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
           filled: true,
           fillColor: Color.fromARGB(255, 69, 90, 100),
           hintStyle: TextStyle(color: Colors.white),
           hintText: "Enter Coordinate"),
+      controller: TextEditingController(),
     );
   }
 }

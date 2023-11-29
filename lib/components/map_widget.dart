@@ -67,6 +67,7 @@ class _MapWidgetState extends State<MyMapWidget> {
                 return right_menu_insert_widget(
                     callback: () => setState(() {
                           menuId = 0;
+                          mapUpdate();
                         }),
                     rightMenuState: menuId);
               case 3:
