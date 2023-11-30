@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:collapsible_sidebar/collapsible_sidebar.dart';
+//import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:parcel_pro/components/map_widget.dart';
 import 'package:http/http.dart' as http;
 

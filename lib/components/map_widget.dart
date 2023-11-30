@@ -26,6 +26,9 @@ class _MapWidgetState extends State<MyMapWidget> {
 
   var displayRight = false;
   var selectDelete = false;
+  var selectEdit = false;
+  List<LatLng> outers = [];
+  List<List<LatLng>> inners = [];
   String rightText = "";
   var polygonId = -1;
   var menuId = 0;
@@ -60,8 +63,17 @@ class _MapWidgetState extends State<MyMapWidget> {
               case 1:
                 displayRight = false;
                 return right_menu_edit_widget(
-                    callback: () => setState(() => menuId = 0),
-                    rightMenuState: menuId);
+                  callback: () => setState(() {
+                    selectEdit = false;
+                    menuId = 0;
+                  }),
+                  rightMenuState: menuId,
+                  selectEdit: selectEdit,
+                  parcelText: rightText,
+                  polygonId: polygonId,
+                  innerRings: inners,
+                  outerRings: outers,
+                );
               case 2:
                 displayRight = false;
                 return right_menu_insert_widget(
@@ -182,9 +194,53 @@ class _MapWidgetState extends State<MyMapWidget> {
     }
 
     if (menuId == 1) {
+      final ringRegex = RegExp("([0-9 ,-\.][0-9][0-9 ,-\.]+)");
+      List<LatLng> outerRing = [];
+      List<List<LatLng>> innerRings = [];
+      var polyText = "";
+      // var objID = data.entries['objectid'];
+      for (var entry in data.entries) {
+        if (entry.key == 'st_astext') {
+          polyText = entry.value;
+        }
+      }
+      // var polyText = data.entries['st_astext'].toString();
+      var rings = ringRegex.allMatches(polyText);
+
+      for (var i = 0; i < rings.length; i++) {
+        if (i == 0) {
+          for (String j in rings.elementAt(0).group(0)!.split(",")) {
+            List<String> k = j.split(" ");
+            outerRing.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+          }
+        } else {
+          List<LatLng> inner = [];
+          for (String j in rings.elementAt(i).group(0)!.split(",")) {
+            List<String> k = j.split(" ");
+            inner.add(LatLng(double.parse(k[1]), double.parse(k[0])));
+          }
+          innerRings.add(inner);
+        }
+      }
+
+      setState(() {
+        inners = innerRings;
+        outers = outerRing;
+        //rightText = ptext;
+        this.polygonId = polygonId;
+        selectEdit = true;
+      });
     } else if (menuId == 3) {
       var ptext = "";
-      List vals = ["oaddr1", "ocity", "ostate", "ozipcd"];
+      List vals = [
+        "oaddr1",
+        "ocity",
+        "ostate",
+        "ozipcd",
+        "phyaddr1",
+        "phycity",
+        "phyzip"
+      ];
       for (var entry in data.entries) {
         if (vals.contains(entry.key)) {
           ptext += "${entry.key}: ${entry.value}\n";

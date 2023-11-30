@@ -47,12 +47,18 @@ class right_menu_parcel_info extends StatelessWidget {
                 ],
               ),
             ),
-            SelectableText(
-              //should we wrap with single child scroll view to prevent overflow?
-              rightMenuText,
-              style: TextStyle(color: Colors.white),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: SelectableText(
+                  //should we wrap with single child scroll view to prevent overflow?
+                  rightMenuText,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
             ElevatedButton(
+              style: flatButtonStyle,
               onPressed: () async {
                 final deleteURI = Uri.http('3.94.113.50', '/deleteParcel', {
                   "objectid": polygonId.toString(),

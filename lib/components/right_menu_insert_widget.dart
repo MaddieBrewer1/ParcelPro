@@ -75,14 +75,15 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
             Container(
               margin: EdgeInsets.only(bottom: 15),
               child: TextButton.icon(
-                onPressed: () async { //convert list to latitudes
+                onPressed: () async {
+                  //convert list to latitudes
                   var polyText = "MULTIPOLYGON(((";
-                  for (TextField widget in inserts){
+                  for (TextField widget in inserts) {
                     try {
                       String latlng = widget.controller!.text;
                       var latlngarray = latlng.split(",");
                       polyText += latlngarray[1] + " " + latlngarray[0] + ",";
-                    } catch  (e) {}
+                    } catch (e) {}
                   }
 
                   try {
@@ -91,10 +92,8 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
                     polyText += latlngarray[1] + " " + latlngarray[0] + ")))";
                   } catch (e) {}
 
-                  final deleteURI = Uri.http('3.94.113.50', '/insertParcel', {
-                    "polygon": polyText,
-                    "key": "3127639894533413"
-                  });
+                  final deleteURI = Uri.http('3.94.113.50', '/insertParcel',
+                      {"polygon": polyText, "key": "3127639894533413"});
 
                   final response = await http.get(deleteURI);
                   widget.callback();
@@ -134,12 +133,13 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
     return TextField(
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        suffixIcon: IconButton( icon: Icon(Icons.close),
-        onPressed: () => setState(() {
-          inserts.removeAt(_findIndex(index));
-        }),
-        color: Colors.white,
-        ),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () => setState(() {
+              inserts.removeAt(_findIndex(index));
+            }),
+            color: Colors.white,
+          ),
           filled: true,
           fillColor: Color.fromARGB(255, 69, 90, 100),
           hintStyle: TextStyle(color: Colors.white),
@@ -150,12 +150,11 @@ class right_menu_insert_state extends State<right_menu_insert_widget> {
 
   List<int> removedIds = [];
 
-  int _findIndex(int index){
-     removedIds.add(index);
+  int _findIndex(int index) {
+    removedIds.add(index);
     int i = 0;
-    for (var ids in removedIds){
-      if(ids < index)
-        i++;
+    for (var ids in removedIds) {
+      if (ids < index) i++;
     }
     return index - i;
   }
