@@ -28,7 +28,9 @@ class right_menu_edit_widget extends StatefulWidget {
 
 class right_menu_edit_state extends State<right_menu_edit_widget> {
   late List<TextFormField> editFields;
-  late List<TextFormField> editInnerFields;
+  late List<List<TextFormField>> editInnerFields;
+
+  //TextEditingController textController = TextEditingController();
 
   @override
   void initState() {
@@ -91,7 +93,7 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
     } else {
       setState(() {
         editFields = buildFields();
-        // editInnerFields = buildInnerFields();
+        //editInnerFields = buildInnerFields
       });
       return Column(
         children: [
@@ -111,15 +113,21 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
                 Icons.add_rounded,
                 color: Colors.white,
               )),
-          //EditCoordinates(context, widget.innerRings),
-          for (List<LatLng> list in widget.innerRings)
+          //for(List<TextFormField> list in EditInnerFields)
+
+          //for (List<LatLng> list in widget.innerRings)
+          for (int i = 0; i < widget.innerRings.length; i++)
             Column(
               children: [
-                EditInnerCoordinates(context, buildInnerFields(list)),
+                EditInnerCoordinates(
+                    context,
+                    editInnerFields[i] =
+                        buildInnerFields(widget.innerRings[i], i)),
                 IconButton(
                     onPressed: () => setState(() {
                           LatLng newLatLng = LatLng(0.0, 0.0);
-                          list.add(newLatLng);
+                          //list.add(newLatLng);
+                          widget.innerRings[i].add(newLatLng);
                         }),
                     icon: Icon(
                       Icons.add_rounded,
@@ -127,7 +135,6 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
                     )),
               ],
             ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -151,7 +158,67 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
                 child: TextButton(
                     //untested
                     onPressed: () async {
-                      //code for editing the parcel
+                      // print("confirm clicked");
+                      // print("Outer");
+                      // for (int i = 0; i < editFields.length; i++) {
+                      //   print(editFields[i].controller?.text);
+                      // }
+                      // print("holes");
+                      // for (int i = 0; i < editInnerFields.length; i++) {
+                      //   print("hole " + i.toString());
+                      //   for (int j = 0; j < editInnerFields[i].length; j++) {
+                      //     print(editInnerFields[i][j].controller?.text);
+                      //   }
+                      // }
+
+                      var polyText = "MULTIPOLYGON(((";
+                      for (TextFormField widget in editFields) {
+                        try {
+                          String latlng = widget.controller!.text;
+                          var latlngarray = latlng.split(",");
+                          polyText +=
+                              latlngarray[1] + " " + latlngarray[0] + ",";
+                        } catch (e) {}
+                      }
+                      polyText += ")";
+
+                      for (List<TextFormField> list in editInnerFields) {
+                        polyText += ",(";
+                        for (TextFormField widget in list) {
+                          try {
+                            String latlng = widget.controller!.text;
+                            var latlngarray = latlng.split(",");
+                            polyText +=
+                                latlngarray[1] + " " + latlngarray[0] + ",";
+                          } catch (e) {}
+                        }
+                        polyText += ")";
+                      }
+
+                      polyText += "))";
+                      //dynamic id = widget.polygonId;
+                      final editURI = Uri.http('3.94.113.50', '/editParcel', {
+                        "objectid": widget.polygonId.toString(),
+                        "polygon": polyText,
+                        "key": "3127639894533413"
+                      });
+
+                      final response = await http.get(editURI);
+                      widget.callback();
+
+                      // try {
+                      //   var start = inserts[0].controller!.text;
+                      //   var latlngarray = start.split(",");
+                      //   polyText += latlngarray[1] + " " + latlngarray[0] + ")))";
+                      // } catch (e) {}
+
+                      // final deleteURI = Uri.http('3.94.113.50', '/insertParcel', {
+                      //   "polygon": polyText,
+                      //   "key": "3127639894533413"
+                      // });
+
+                      // final response = await http.get(deleteURI);
+                      // widget.callback();
                     },
                     style: flatButtonStyle,
                     child: const Text(
@@ -163,90 +230,44 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
               ),
             ],
           ),
-          // Container(
-          //     margin: EdgeInsets.only(bottom: 15),
-          //     child: TextButton.icon(
-          //       onPressed: () async { //convert list to latitudes
-          //         var polyText = "MULTIPOLYGON(((";
-          //         for (TextField widget in inserts){
-          //           try {
-          //             String latlng = widget.controller!.text;
-          //             var latlngarray = latlng.split(",");
-          //             polyText += latlngarray[1] + " " + latlngarray[0] + ",";
-          //           } catch  (e) {}
-          //         }
-
-          //         try {
-          //           var start = inserts[0].controller!.text;
-          //           var latlngarray = start.split(",");
-          //           polyText += latlngarray[1] + " " + latlngarray[0] + ")))";
-          //         } catch (e) {}
-
-          //         final deleteURI = Uri.http('3.94.113.50', '/insertParcel', {
-          //           "polygon": polyText,
-          //           "key": "3127639894533413"
-          //         });
-
-          //         final response = await http.get(deleteURI);
-          //         widget.callback();
-          //       },
-          //       icon: Icon(
-          //         Icons.check_circle_outline,
-          //         color: Colors.white,
-          //         size: 25,
-          //       ),
-          //       label: Text(
-          //         "Done",
-          //         style: TextStyle(color: Colors.white, fontSize: 20),
-          //       ),
-          //     ),
-          //   )
         ],
       );
     }
   }
 
-  // Widget innerRingLists() {
-  //   List<Widget> fuckthis = [];
-  //   for (List<LatLng> l in widget.innerRings) {
-  //     fuckthis.add(EditCoordinates(context, l));
-  //   }
-  //   return (context, fuckthis)
-  // }
-
   List<TextFormField> buildFields() {
     List<TextFormField> temp = [];
     for (int i = 0; i < widget.outerRings.length; i++) {
       // print(widget.outerRings[i]);
-      temp.add(EditTextField(i, widget.outerRings));
+      temp.add(EditTextField(i, widget.outerRings, true));
     }
     return temp;
   }
 
-  // List<TextFormField> buildInnerFields() {
-  //   List<TextFormField> temp = [];
-  //   for (int j = 0; j < widget.innerRings.length; j++) {
-  //     for (int i = 0; i < widget.innerRings[j].length; i++) {
-  //       print(widget.innerRings[i]);
-  //       temp.add(EditTextField(i, widget.outerRings));
-  //     }
-  //   }
-
-  //   return temp;
-  // }
-  List<TextFormField> buildInnerFields(List<LatLng> l) {
+  List<TextFormField> buildInnerFields(List<LatLng> latlng, int index) {
+    if (index == 0) {
+      editInnerFields.clear();
+    }
     List<TextFormField> temp = [];
-    for (int i = 0; i < l.length; i++) {
-      // print(l[i]);
-      temp.add(EditTextField(i, l));
+    for (int i = 0; i < latlng.length; i++) {
+      temp.add(EditTextField(i, latlng, false));
     }
+    editInnerFields.add(temp);
     return temp;
   }
 
-  String latLngToString(LatLng l) {
-    String s = l.toString();
-    String res = s.replaceAll(RegExp('([^0-9 ,-\.])'), '');
-    return res;
+  String latLngToString(LatLng latlng) {
+    String tempString = latlng.toString();
+    String resultString = tempString.replaceAll(RegExp('([^0-9 ,-\.])'), '');
+    return resultString;
+  }
+
+  LatLng stringToLatLng(String string) {
+    var splitString = string.split(',');
+    for (var strings in splitString) {
+      strings = strings.replaceAll(' ', '');
+    }
+    return LatLng(double.parse(splitString[0]), double.parse(splitString[1]));
   }
 
   Widget EditCoordinates(BuildContext context) {
@@ -276,21 +297,38 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
     );
   }
 
-  TextFormField EditTextField(int i, List<LatLng> list) {
+  TextFormField EditTextField(int i, List<LatLng> list, bool ring) {
+    TextEditingController textController = TextEditingController();
+    textController.text = latLngToString(list[i]);
     return TextFormField(
       style: TextStyle(color: Colors.white),
-      initialValue: latLngToString(list[i]),
+      //initialValue: latLngToString(list[i]),
+      controller: textController,
+      onChanged: (value) {
+        setState(() {
+          if (ring) {
+            widget.outerRings[i] = stringToLatLng(value);
+          } else {
+            widget.innerRings[widget.innerRings.indexOf(list)][i] =
+                stringToLatLng(value);
+          }
+        });
+      },
       decoration: InputDecoration(
           suffixIcon: IconButton(
             icon: Icon(Icons.close),
             onPressed: () => setState(() {
-              list.removeAt(i);
+              //list.removeAt(i);
+              if (ring) {
+                widget.outerRings.removeAt(i);
+              } else {
+                widget.innerRings[widget.innerRings.indexOf(list)].removeAt(i);
+              }
             }),
             color: Colors.white,
           ),
           filled: true,
           fillColor: Color.fromARGB(255, 69, 90, 100)),
-      //controller: TextEditingController(),
     );
   }
 }
