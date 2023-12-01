@@ -180,6 +180,7 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
                               latlngarray[1] + " " + latlngarray[0] + ",";
                         } catch (e) {}
                       }
+                      polyText = polyText.substring(0, polyText.length - 1);
                       polyText += ")";
 
                       for (List<TextFormField> list in editInnerFields) {
@@ -190,12 +191,19 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
                             var latlngarray = latlng.split(",");
                             polyText +=
                                 latlngarray[1] + " " + latlngarray[0] + ",";
+                            if (list == editInnerFields.last &&
+                                widget == list.last) {
+                              polyText =
+                                  polyText.substring(0, polyText.length - 1);
+                            }
                           } catch (e) {}
                         }
                         polyText += ")";
                       }
 
                       polyText += "))";
+
+                      print(polyText);
                       //dynamic id = widget.polygonId;
                       final editURI = Uri.http('3.94.113.50', '/editParcel', {
                         "objectid": widget.polygonId.toString(),
