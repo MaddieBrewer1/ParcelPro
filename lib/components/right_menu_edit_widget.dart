@@ -100,7 +100,14 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
           Container(
               margin: EdgeInsets.fromLTRB(15, 100, 15, 10),
               child: const Text(
-                "Edit Coordinates:",
+                "Edit Coordinates",
+                style: TextStyle(color: Colors.white, fontSize: 18.0),
+              )),
+          Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.all(10),
+              child: const Text(
+                "Outer Perimeter:",
                 style: TextStyle(color: Colors.white, fontSize: 18.0),
               )),
           EditCoordinates(context),
@@ -109,16 +116,21 @@ class right_menu_edit_state extends State<right_menu_edit_widget> {
                     LatLng newLatLng = LatLng(0.0, 0.0);
                     widget.outerRings.add(newLatLng);
                   }),
-              icon: Icon(
+              icon: const Icon(
                 Icons.add_rounded,
                 color: Colors.white,
               )),
-          //for(List<TextFormField> list in EditInnerFields)
-
-          //for (List<LatLng> list in widget.innerRings)
           for (int i = 0; i < widget.innerRings.length; i++)
             Column(
               children: [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.all(10),
+                    child: Text(
+                      "Hole ${i + 1}:",
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 18.0),
+                    )),
                 EditInnerCoordinates(
                     context,
                     editInnerFields[i] =

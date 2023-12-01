@@ -35,7 +35,7 @@ class right_menu_info_widget extends StatelessWidget {
               ),
             ),
             Spacer(
-              flex: 3,
+              flex: 2,
             ),
             Text(
               "Editing a Parcel",
@@ -44,53 +44,14 @@ class right_menu_info_widget extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
-            Spacer(
-              flex: 1,
-            ),
+            // Spacer(
+            //   flex: 1,
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "With the edit option, you can choose to either merge 2 parcels, split a parcel, or edit the coordinates of a parcel.",
+                "With the edit option, you can alter the coordinates of the selected parcel.",
                 style: TextStyle(color: Colors.white, fontSize: 15.0),
-              ),
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "   - Merging parcels will combine two separate parcels into a singular larger parcel.",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.italic),
-              ),
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "   - Splitting parcels will split a singluar parcel into two separate parcels.",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.italic),
-              ),
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "   - You can edit a parcel by altering the coordinates of the parcel.",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.italic),
               ),
             ),
             Spacer(
@@ -103,9 +64,9 @@ class right_menu_info_widget extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
-            Spacer(
-              flex: 1,
-            ),
+            // Spacer(
+            //   flex: 1,
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -123,13 +84,13 @@ class right_menu_info_widget extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
-            Spacer(
-              flex: 1,
-            ),
+            // Spacer(
+            //   flex: 1,
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "A parcel can be deleted by selecting it from the map",
+                "With the delete option, a parcel can be deleted by selecting it from the map.",
                 style: TextStyle(color: Colors.white, fontSize: 15.0),
               ),
             ),
@@ -143,18 +104,18 @@ class right_menu_info_widget extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
-            Spacer(
-              flex: 1,
-            ),
+            // Spacer(
+            //   flex: 1,
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Simply click on a parcel in the map to display its information",
+                "Simply click on a parcel in the map to display its information.",
                 style: TextStyle(color: Colors.white, fontSize: 15.0),
               ),
             ),
             Spacer(
-              flex: 1,
+              flex: 2,
             ),
 
             // RichText(
